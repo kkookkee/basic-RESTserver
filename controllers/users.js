@@ -47,7 +47,8 @@ const usuariosPost = async(req, res = response) => {
 }
 const usuariosDelete = async(req, res = response) => {
     const {id} = req.params
-    await Usuario.findByIdAndDelete(id)
+    const userAuth = req.userAuth
+    //await Usuario.findByIdAndDelete(id)
     res.status(403).json({
         msg:'delete api '
     })
