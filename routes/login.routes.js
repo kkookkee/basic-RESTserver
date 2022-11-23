@@ -1,6 +1,6 @@
 const {Router} = require('express')
 const { check } = require('express-validator')
-const { login } = require('../controllers/auth')
+const { login, googleSignIn } = require('../controllers/auth')
 const { validarCampos } = require('../middlewares/validacionCampos')
 const Role =  require('../models/role')
 const {existeMail, usuarioActivo, comprobarPass} = require('../helpers/dbValidator')
@@ -28,6 +28,11 @@ router.post('/login',[
     }),
     validarCampos
 ],login)
+
+router.post('/google',[
+    check('id_token','No puede venir vacio').not().isEmpty(),
+    validarCampos
+],googleSignIn)
 
 
 
