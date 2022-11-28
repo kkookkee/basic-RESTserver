@@ -10,6 +10,9 @@ class Server {
         this.port = process.env.PORT
         this.usuariosPath = '/api/usuarios'
         this.loginPath = '/api/auth'
+        this.categoriasPath = '/api/categorias'
+        this.productosPath = '/api/productos'
+        this.buscarPath = '/api/buscar'
         //conexiondb
         this.conectDB()
         //middleware
@@ -34,6 +37,9 @@ class Server {
     routes(){
         this.app.use(this.usuariosPath,require('../routes/user.routes'))
         this.app.use(this.loginPath,require('../routes/login.routes'))
+        this.app.use(this.categoriasPath,require('../routes/categorias.routes'))
+        this.app.use(this.productosPath,require('../routes/productos.routes'))
+        this.app.use(this.buscarPath,require('../routes/buscar.routes'))
     }
 
     listen(){
