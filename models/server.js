@@ -3,6 +3,7 @@ const cors = require('cors')
 const app = express()
 
 const {dbConnect} = require('../database/config')
+const fileUpload = require('express-fileupload')
 
 class Server {
     constructor(){
@@ -13,6 +14,7 @@ class Server {
         this.categoriasPath = '/api/categorias'
         this.productosPath = '/api/productos'
         this.buscarPath = '/api/buscar'
+        this.uploadPath = '/api/upload'
         //conexiondb
         this.conectDB()
         //middleware
@@ -27,11 +29,17 @@ class Server {
 
     middlewares(){
         //CORS
-        app.use(cors())
+        this.app.use(cors())
         //lectura y parseo del body
         this.app.use(express.json())
         //Directorio publico
         this.app.use(express.static('public'))
+        //File upload
+        this.app.use(fileUpload({
+            useTempFiles: true,
+            tempFileDir: '/tmp',
+            createParentPath: true
+        }))
     }
 
     routes(){
@@ -40,6 +48,7 @@ class Server {
         this.app.use(this.categoriasPath,require('../routes/categorias.routes'))
         this.app.use(this.productosPath,require('../routes/productos.routes'))
         this.app.use(this.buscarPath,require('../routes/buscar.routes'))
+        this.app.use(this.uploadPath,require('../routes/uploads.routes'))
     }
 
     listen(){

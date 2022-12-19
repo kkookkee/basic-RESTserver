@@ -41,11 +41,20 @@ const passwordMatch = async(correo='',req) => {
     }
 }
 
+const validarColecciones = (coleccion='',coleccionesPermitidas = []) => {
+    const incluida = coleccionesPermitidas.includes(coleccion)
+    if(!incluida){
+        throw new Error('Coleccion no permitida')
+    }
+    return true
+}
+
 module.exports = {
     esRolValido,
     emailValido,
     existeID,
     existeMail,
     usuarioActivo,
-    passwordMatch
+    passwordMatch,
+    validarColecciones
 }
